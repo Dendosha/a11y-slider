@@ -41,7 +41,8 @@ html {
 	font-style: normal;
 	font-weight: var(--ff-normal);
 
-	color: var(--clr-black);
+	color: var(--clr-light);
+	background-color: var(--clr-dark);
 
 	scroll-behavior: smooth;
 	scroll-padding-top: initial;
