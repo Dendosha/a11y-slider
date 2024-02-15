@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<title>Template</title>
+	<title>a11y-slider</title>
 
 	<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 	<link rel="icon" type="image/png" href="img/favicon.png">
@@ -23,7 +23,32 @@
 
 </header>
 		<main class="page">
+			<h1 class="--visually-hidden">Slider</h1>
+			<section class="page__slider page-slider">
+				<div class="page-slider__container --container">
+					<h2 id="slider-title" class="page-slider__title">Accessible slider</h2>
 
+					<div aria-describedby="slider-title" class="slider">
+						<div class="slider__wrapper">
+							<div class="slider__slide">01</div>
+							<div class="slider__slide">02</div>
+							<div class="slider__slide">03</div>
+							<div class="slider__slide">04</div>
+						</div>
+
+						<div class="slider__pagination">
+							<div class="slider__page"></div>
+							<div class="slider__page"></div>
+							<div class="slider__page"></div>
+							<div class="slider__page"></div>
+						</div>
+
+						<button class="slider__slide-button slider__slide-button_prev"></button>
+						<button class="slider__slide-button slider__slide-button_next"></button>
+					</div>
+
+				</div>
+			</section>
 		</main>
 		<footer class="footer">
 
