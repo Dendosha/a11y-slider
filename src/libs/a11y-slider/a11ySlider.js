@@ -3,6 +3,7 @@ import deepObjectMerge from "../deep-object-merge/deepObjectMerge.js"
 class Slider {
 	#defaultOptions = {
 		modules: [],
+		moduleInstances: [],
 
 		loop: false,
 
@@ -44,7 +45,8 @@ class Slider {
 		this.#addAccessibility()
 
 		this.options.modules.forEach(Module => {
-			new Module(this, this.slides, this.options)
+			const moduleInstance = new Module(this, this.slides, this.options)
+			this.options.moduleInstances.push(moduleInstance)
 		})
 
 		this.#addAccessibility()
@@ -86,6 +88,12 @@ class Slider {
 
 	pointerLeaveHandler(e) {
 
+	}
+
+	update() {
+		this.options.moduleInstances.forEach(moduleInstance => {
+			if (moduleInstance.update) moduleInstance.update()
+		})
 	}
 }
 

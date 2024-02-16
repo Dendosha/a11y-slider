@@ -53,26 +53,26 @@ export class Pagination {
 			case this.options.keys.prevSlide:
 				e.preventDefault()
 				if (page.previousElementSibling) {
-					this.activatePage(this.pages[pageIndex - 1])
+					this.changePage(this.pages[pageIndex - 1])
 				} else {
-					this.activatePage(this.pages[this.pages.length - 1])
+					this.changePage(this.pages[this.pages.length - 1])
 				}
 				break
 			case this.options.keys.nextSlide:
 				e.preventDefault()
 				if (page.nextElementSibling) {
-					this.activatePage(this.pages[pageIndex + 1])
+					this.changePage(this.pages[pageIndex + 1])
 				} else {
-					this.activatePage(this.pages[0])
+					this.changePage(this.pages[0])
 				}
 				break
 			case 'Home':
 				e.preventDefault()
-				this.activatePage(this.pages[0])
+				this.changePage(this.pages[0])
 				break
 			case 'End':
 				e.preventDefault()
-				this.activatePage(this.pages[this.pages.length - 1])
+				this.changePage(this.pages[this.pages.length - 1])
 				break
 		}
 	}
@@ -88,12 +88,16 @@ export class Pagination {
 		if (!this.userPointer.isDown) return
 
 		if (e.target === this.userPointer.target) {
-			this.activatePage(e.target.parentElement)
+			this.changePage(e.target.parentElement)
 			this.userPointer.isDown = false
 		}
 	}
 
-	activatePage(page) {
+	update() {
+		this.#selectPage(this.pages[this.slider.slides.indexOf(this.slider.currentSlide)])
+	}
+
+	#selectPage(page) {
 		this.currentPage.children[0].setAttribute('tabindex', '-1')
 		this.currentPage.children[0].removeAttribute('aria-current')
 
@@ -101,9 +105,12 @@ export class Pagination {
 		page.children[0].setAttribute('aria-current', 'true')
 		page.children[0].focus()
 
-		slideTo(this.pages.indexOf(page), this.slider)
-
 		this.currentPage = page
+	}
+
+	changePage(page) {
+		this.#selectPage(page)
+		slideTo(this.pages.indexOf(page), this)
 	}
 }
 
@@ -182,16 +189,16 @@ export class Navigation {
 		switch (button) {
 			case this.prevButton:
 				if (this.slider.slides[currentSlideIndex].previousElementSibling) {
-					slideTo(currentSlideIndex - 1, this.slider)
+					slideTo(currentSlideIndex - 1, this, true)
 				} else {
-					slideTo(this.slider.slides.length - 1, this.slider)
+					slideTo(this.slider.slides.length - 1, this, true)
 				}
 				break
 			case this.nextButton:
 				if (this.slider.slides[currentSlideIndex].nextElementSibling) {
-					slideTo(currentSlideIndex + 1, this.slider)
+					slideTo(currentSlideIndex + 1, this, true)
 				} else {
-					slideTo(0, this.slider)
+					slideTo(0, this, true)
 				}
 				break
 		}
