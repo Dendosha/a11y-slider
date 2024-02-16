@@ -2,9 +2,11 @@ import deepObjectMerge from "../deep-object-merge/deepObjectMerge.js"
 
 class Slider {
 	#defaultOptions = {
+		modules: [],
+
 		loop: false,
 
-		buttons: {
+		navigation: {
 			prevButton: null,
 			nextButton: null,
 			a11y: ['Previous slide', 'Next slide'],
@@ -13,7 +15,11 @@ class Slider {
 		pagination: {
 			element: null,
 			a11y: ['Slider pagination', 'Slide'],
-		}
+			keys: {
+				prevSlide: 'ArrowLeft',
+				nextSlide: 'ArrowRight',
+			},
+		},
 	}
 
 	constructor(element, options) {
@@ -26,15 +32,22 @@ class Slider {
 	#setup() {
 		this.userPointer = {
 			isDown: false,
-			element: null,
+			target: null,
 		}
 
 		this.slideList = this.element.querySelector('[data-slider="slideList"]')
+		this.slideList.style.transition = this.options.transition
+
 		this.slides = Array.from(this.slideList.children)
+		this.currentSlide = null
 
 		this.#addAccessibility()
 
-		this.slideTo(0)
+		this.options.modules.forEach(Module => {
+			new Module(this, this.slides, this.options)
+		})
+
+		this.#addAccessibility()
 
 		this.pointerDownHandler = this.pointerDownHandler.bind(this)
 		this.pointerUpHandler = this.pointerUpHandler.bind(this)
@@ -48,39 +61,32 @@ class Slider {
 	}
 
 	#addAccessibility() {
-		let havePagination = this.options.pagination.element
-		this.options?.buttons?.prevButton?.setAttribute('aria-label', this.options?.buttons?.a11y[0])
-		this.options?.buttons?.nextButton?.setAttribute('aria-label', this.options?.pagination?.a11y[1])
-
-		if (havePagination) {
-			this.options.pagination.element.setAttribute('aria-label', this.options.pagination.a11y[0])
-		}
-
 		this.slides.forEach((slide, index) => {
-			slide.setAttribute('tabindex', '-1')
+			if (index === 0) {
+				slide.setAttribute('tabindex', '0')
 
-			if (havePagination) {
-				const pageButton = this.options.pagination.element.children[index]
-				pageButton.setAttribute('aria-label', `${this.options.pagination.a11y[1]} ${index}`)
+				this.currentSlide = slide
+			} else {
+				slide.setAttribute('tabindex', '-1')
 			}
 		})
 	}
 
-	pointerDownHandler() { }
+	pointerDownHandler(e) {
 
-	pointerUpHandler() { }
-
-	pointerMoveHandler() { }
-
-	pointerLeaveHandler() { }
-
-	slideTo(slideIndex) {
-		this.slides[slideIndex].setAttribute('tabindex', '0')
 	}
 
-	slidePrev() { }
+	pointerUpHandler(e) {
 
-	slideNext() { }
+	}
+
+	pointerMoveHandler(e) {
+
+	}
+
+	pointerLeaveHandler(e) {
+
+	}
 }
 
 export default Slider

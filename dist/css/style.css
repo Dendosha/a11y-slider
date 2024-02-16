@@ -199,6 +199,7 @@ body.--modal-opened, body.--burger-menu-opened {
 
 .slider {
   --clr-buttons: var(--clr-light);
+  --clr-interaction: #5f75f1;
   position: relative;
   display: flex;
   justify-content: center;
@@ -209,10 +210,14 @@ body.--modal-opened, body.--burger-menu-opened {
 }
 .slider__wrapper {
   flex: 1;
-  display: flex;
-  max-width: 31.25rem;
-  margin: 0 auto;
   overflow: hidden;
+  max-width: 31.25rem;
+  border-radius: 1.25rem;
+  margin: 0 auto;
+}
+.slider__slidelist {
+  display: flex;
+  gap: 1.25rem;
 }
 .slider__slide {
   --clr-slide: #fff;
@@ -223,7 +228,9 @@ body.--modal-opened, body.--burger-menu-opened {
   padding: 1.25rem;
   border-radius: 1.25rem;
   background-color: var(--clr-slide);
+  border: 0.125rem solid transparent;
   font-size: 2.875rem;
+  transition: all 0.3s;
 }
 .slider__slide:nth-child(1n) {
   --clr-slide: #b31212;
@@ -238,35 +245,70 @@ body.--modal-opened, body.--burger-menu-opened {
   --clr-slide: #45ad00;
 }
 .slider__slide:focus-within {
-  border: 0.125rem solid white;
+  border-color: var(--clr-interaction);
 }
 .slider__pagination {
   position: absolute;
   bottom: 0.9375rem;
   display: flex;
-  gap: 0.3125rem;
+  align-items: center;
   justify-content: center;
-  height: 1.25rem;
+  gap: 0.625rem;
   width: 100%;
   border-radius: 0.625rem;
 }
+.slider__pagination > li {
+  display: flex;
+}
 .slider__page {
-  height: 0.9375rem;
+  height: 1.25rem;
   width: 2.1875rem;
   border-radius: 0.625rem;
   background-color: var(--clr-buttons);
+  outline: 0.125rem solid transparent;
+  outline-offset: 0.125rem;
+  transition: all 0.3s;
+}
+.slider__page[aria-current=true] {
+  background-color: var(--clr-interaction);
+}
+.slider__page:focus {
+  outline-color: var(--clr-interaction);
+}
+@media (any-hover: hover) {
+  .slider__page:hover {
+    outline-color: var(--clr-interaction);
+  }
 }
 .slider__slide-button {
   position: absolute;
   align-self: center;
-  border: 2.5rem solid transparent;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 0.625rem;
   background-color: transparent;
+  outline: 0.125rem solid transparent;
+  transition: all 0.3s;
 }
 .slider__slide-button_prev {
-  left: 0rem;
-  border-right: 2.5rem solid var(--clr-buttons);
+  left: 0.625rem;
 }
 .slider__slide-button_next {
-  right: 0rem;
-  border-left: 2.5rem solid var(--clr-buttons);
+  right: 0.625rem;
+}
+.slider__slide-button > svg {
+  fill: var(--clr-light);
+  max-width: 100%;
+  transition: all 0.3s;
+}
+.slider__slide-button:focus {
+  outline-color: var(--clr-interaction);
+}
+.slider__slide-button:focus > svg {
+  fill: var(--clr-interaction);
+}
+@media (any-hover: hover) {
+  .slider__slide-button:hover > svg {
+    fill: var(--clr-interaction);
+  }
 }
