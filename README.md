@@ -1,1 +1,1 @@
-# Gulp template for projects
+# Accessible slider
