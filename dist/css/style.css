@@ -215,25 +215,30 @@ body.--modal-opened, body.--burger-menu-opened {
   overflow: hidden;
 }
 .slider__slide {
+  --clr-slide: #fff;
   display: grid;
   place-items: center;
   flex: 0 0 100%;
   min-height: 15.625rem;
   padding: 1.25rem;
   border-radius: 1.25rem;
+  background-color: var(--clr-slide);
   font-size: 2.875rem;
 }
 .slider__slide:nth-child(1n) {
-  background-color: #b31212;
+  --clr-slide: #b31212;
 }
 .slider__slide:nth-child(2n) {
-  background-color: #a35c00;
+  --clr-slide: #a35c00;
 }
 .slider__slide:nth-child(3n) {
-  background-color: #1e00a3;
+  --clr-slide: #1e00a3;
 }
 .slider__slide:nth-child(4n) {
-  background-color: #45ad00;
+  --clr-slide: #45ad00;
+}
+.slider__slide:focus-within {
+  border: 0.125rem solid white;
 }
 .slider__pagination {
   position: absolute;

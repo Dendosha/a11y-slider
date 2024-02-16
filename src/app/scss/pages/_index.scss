@@ -56,6 +56,8 @@
 	// .slider__slide
 
 	&__slide {
+		--clr-slide: #fff;
+
 		display: grid;
 		place-items: center;
 
@@ -64,23 +66,28 @@
 
 		padding: rem(20);
 		border-radius: rem(20);
+		background-color: var(--clr-slide);
 
 		font-size: rem(46);
 
 		&:nth-child(1n) {
-			background-color: #b31212;
+			--clr-slide: #b31212;
 		}
 
 		&:nth-child(2n) {
-			background-color: #a35c00;
+			--clr-slide: #a35c00;
 		}
 
 		&:nth-child(3n) {
-			background-color: #1e00a3;
+			--clr-slide: #1e00a3;
 		}
 
 		&:nth-child(4n) {
-			background-color: #45ad00;
+			--clr-slide: #45ad00;
+		}
+
+		&:focus-within {
+			border: rem(2) solid white;
 		}
 	}
 
