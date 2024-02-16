@@ -94,22 +94,22 @@ export class Pagination {
 	}
 
 	update() {
-		this.#selectPage(this.pages[this.slider.slides.indexOf(this.slider.currentSlide)])
+		this.selectPage(this.pages[this.slider.slides.indexOf(this.slider.currentSlide)])
 	}
 
-	#selectPage(page) {
+	selectPage(page) {
 		this.currentPage.children[0].setAttribute('tabindex', '-1')
 		this.currentPage.children[0].removeAttribute('aria-current')
 
 		page.children[0].setAttribute('tabindex', '0')
 		page.children[0].setAttribute('aria-current', 'true')
-		page.children[0].focus()
 
 		this.currentPage = page
 	}
 
 	changePage(page) {
-		this.#selectPage(page)
+		this.selectPage(page)
+		page.children[0].focus()
 		slideTo(this.pages.indexOf(page), this)
 	}
 }
