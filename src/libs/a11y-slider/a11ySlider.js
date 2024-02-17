@@ -3,9 +3,13 @@ import deepObjectMerge from "../deep-object-merge/deepObjectMerge.js"
 class Slider {
 	#defaultOptions = {
 		modules: [],
-		moduleInstances: [],
 
 		loop: false,
+		slideStatusA11y: 'Displaying slide, of',
+		skipSlider: {
+			buttonPresense: true,
+			a11y: ['Skip slider', 'End of slider'],
+		},
 
 		navigation: {
 			prevButton: null,
@@ -15,17 +19,15 @@ class Slider {
 
 		pagination: {
 			element: null,
-			a11y: ['Slider pagination', 'Slide'],
-			keys: {
-				prevSlide: 'ArrowLeft',
-				nextSlide: 'ArrowRight',
-			},
+			a11y: ['Slider pagination', 'Slide to, of'],
 		},
 	}
 
 	constructor(element, options) {
 		this.element = element
 		this.options = deepObjectMerge(this.#defaultOptions, options)
+
+		this.moduleInstances = []
 
 		this.#setup()
 	}
@@ -46,10 +48,8 @@ class Slider {
 
 		this.options.modules.forEach(Module => {
 			const moduleInstance = new Module(this, this.slides, this.options)
-			this.options.moduleInstances.push(moduleInstance)
+			this.moduleInstances.push(moduleInstance)
 		})
-
-		this.#addAccessibility()
 
 		this.pointerDownHandler = this.pointerDownHandler.bind(this)
 		this.pointerUpHandler = this.pointerUpHandler.bind(this)
@@ -63,13 +63,38 @@ class Slider {
 	}
 
 	#addAccessibility() {
+		if (this.options.skipSlider.buttonPresense) {
+			this.endOfSlider = document.createElement('div')
+			this.endOfSlider.innerText = this.options.skipSlider.a11y[1]
+			this.endOfSlider.setAttribute('tabindex', '-1')
+			this.endOfSlider.classList.add('--visually-hidden', '--sr-only', '--end-of-slider')
+
+			this.skipSliderButton = document.createElement('button')
+			this.skipSliderButton.innerText = this.options.skipSlider.a11y[0]
+			this.skipSliderButton.classList.add('--visually-hidden', '--sr-only', '--skip-slider-button')
+
+			this.element.append(this.endOfSlider)
+			this.element.prepend(this.skipSliderButton)
+
+			this.skipSliderButton.addEventListener('click', (e) => {
+				this.endOfSlider.focus()
+			})
+		}
+
+		const statusTextTemplate = this.options.slideStatusA11y.split(', ')
+
+		this.status = document.createElement('div')
+		this.element.append(this.status)
+
+		this.status.setAttribute('role', 'status')
+		this.status.classList.add('--slider-status', '--visually-hidden')
+		this.status.innerText = `${statusTextTemplate[0]} 1 ${statusTextTemplate[1]} ${this.slides.length}`
+
 		this.slides.forEach((slide, index) => {
 			if (index === 0) {
-				slide.setAttribute('tabindex', '0')
-
 				this.currentSlide = slide
 			} else {
-				slide.setAttribute('tabindex', '-1')
+				slide.setAttribute('aria-hidden', 'true')
 			}
 		})
 	}
@@ -91,7 +116,7 @@ class Slider {
 	}
 
 	update() {
-		this.options.moduleInstances.forEach(moduleInstance => {
+		this.moduleInstances.forEach(moduleInstance => {
 			if (moduleInstance.update) moduleInstance.update()
 		})
 	}

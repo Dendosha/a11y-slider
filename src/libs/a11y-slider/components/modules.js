@@ -33,12 +33,15 @@ export class Pagination {
 	}
 
 	#addAccessibility() {
+		const buttonAriaLabel = this.options.a11y[1].split(', ')
+
+		this.element.setAttribute('aria-label', `${this.options.a11y[0]}`)
+
 		this.pages.forEach((page, index) => {
+			page.children[0].setAttribute('aria-label', `${buttonAriaLabel[0]} ${index + 1} ${buttonAriaLabel[1]} ${this.pages.length}`)
+
 			if (index === 0) {
-				page.children[0].setAttribute('tabindex', '0')
 				page.children[0].setAttribute('aria-current', 'true')
-			} else {
-				page.children[0].setAttribute('tabindex', '-1')
 			}
 		})
 	}
@@ -47,25 +50,7 @@ export class Pagination {
 		const page = e.target.parentElement
 		if (page.tagName !== 'LI') return
 
-		const pageIndex = this.pages.indexOf(page)
-
 		switch (e.key) {
-			case this.options.keys.prevSlide:
-				e.preventDefault()
-				if (page.previousElementSibling) {
-					this.changePage(this.pages[pageIndex - 1])
-				} else {
-					this.changePage(this.pages[this.pages.length - 1])
-				}
-				break
-			case this.options.keys.nextSlide:
-				e.preventDefault()
-				if (page.nextElementSibling) {
-					this.changePage(this.pages[pageIndex + 1])
-				} else {
-					this.changePage(this.pages[0])
-				}
-				break
 			case 'Home':
 				e.preventDefault()
 				this.changePage(this.pages[0])
@@ -73,6 +58,11 @@ export class Pagination {
 			case 'End':
 				e.preventDefault()
 				this.changePage(this.pages[this.pages.length - 1])
+				break
+			case 'Enter':
+			case ' ':
+				e.preventDefault()
+				this.changePage(page)
 				break
 		}
 	}
@@ -98,10 +88,7 @@ export class Pagination {
 	}
 
 	selectPage(page) {
-		this.currentPage.children[0].setAttribute('tabindex', '-1')
 		this.currentPage.children[0].removeAttribute('aria-current')
-
-		page.children[0].setAttribute('tabindex', '0')
 		page.children[0].setAttribute('aria-current', 'true')
 
 		this.currentPage = page

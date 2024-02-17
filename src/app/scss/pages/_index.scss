@@ -40,6 +40,31 @@
 	border-radius: rem(30);
 	margin: 0 auto;
 
+	& .--end-of-slider:focus,
+	& .--skip-slider-button:focus {
+		white-space: revert;
+		clip-path: revert;
+		clip: revert;
+		overflow: revert;
+
+		display: grid;
+		place-items: center;
+		width: 50%;
+		height: rem(20);
+		border-radius: rem(10);
+
+		background-color: var(--clr-light);
+		color: var(--clr-dark);
+	}
+
+	& .--skip-slider-button:focus {
+		top: rem(-15);
+	}
+
+	& .--end-of-slider:focus {
+		bottom: rem(-15);
+	}
+
 	// .slider__wrapper
 
 	&__wrapper {

@@ -208,6 +208,25 @@ body.--modal-opened, body.--burger-menu-opened {
   border-radius: 1.875rem;
   margin: 0 auto;
 }
+.slider .--end-of-slider:focus, .slider .--skip-slider-button:focus {
+  white-space: revert;
+  clip-path: revert;
+  clip: revert;
+  overflow: revert;
+  display: grid;
+  place-items: center;
+  width: 50%;
+  height: 1.25rem;
+  border-radius: 0.625rem;
+  background-color: var(--clr-light);
+  color: var(--clr-dark);
+}
+.slider .--skip-slider-button:focus {
+  top: -0.9375rem;
+}
+.slider .--end-of-slider:focus {
+  bottom: -0.9375rem;
+}
 .slider__wrapper {
   flex: 1;
   overflow: hidden;
