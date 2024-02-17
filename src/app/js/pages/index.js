@@ -7,6 +7,10 @@ pageSliders.forEach(slider => {
 		modules: [Navigation, Pagination],
 
 		transition: 'all 0.3s',
+		cursor: {
+			default: 'pointer',
+			grab: 'grab',
+		},
 
 		navigation: {
 			prevButton: slider.querySelector('[data-slider="prevButton"]'),

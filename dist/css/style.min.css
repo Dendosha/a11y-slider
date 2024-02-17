@@ -235,6 +235,7 @@ body.--modal-opened, body.--burger-menu-opened {
   margin: 0 auto;
 }
 .slider__slidelist {
+  user-select: none;
   display: flex;
   gap: 1.25rem;
 }

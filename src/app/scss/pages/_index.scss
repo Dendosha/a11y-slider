@@ -79,6 +79,7 @@
 	// .slider__slidelist
 
 	&__slidelist {
+		user-select: none;
 		display: flex;
 		gap: rem(20);
 	}

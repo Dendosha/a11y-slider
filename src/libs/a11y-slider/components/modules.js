@@ -97,7 +97,7 @@ export class Pagination {
 	changePage(page) {
 		this.selectPage(page)
 		page.children[0].focus()
-		slideTo(this.pages.indexOf(page), this)
+		slideTo(this.pages.indexOf(page), this.slider)
 	}
 }
 
@@ -171,21 +171,21 @@ export class Navigation {
 	}
 
 	changeSlide(button) {
-		const currentSlideIndex = this.slider.slides.indexOf(this.slider.currentSlide)
+		const currentSlideIndex = this.slider.currentSlideIndex
 
 		switch (button) {
 			case this.prevButton:
 				if (this.slider.slides[currentSlideIndex].previousElementSibling) {
-					slideTo(currentSlideIndex - 1, this, true)
+					slideTo(currentSlideIndex - 1, this.slider, true)
 				} else {
-					slideTo(this.slider.slides.length - 1, this, true)
+					slideTo(this.slider.slides.length - 1, this.slider, true)
 				}
 				break
 			case this.nextButton:
 				if (this.slider.slides[currentSlideIndex].nextElementSibling) {
-					slideTo(currentSlideIndex + 1, this, true)
+					slideTo(currentSlideIndex + 1, this.slider, true)
 				} else {
-					slideTo(0, this, true)
+					slideTo(0, this.slider, true)
 				}
 				break
 		}
