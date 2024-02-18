@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "gulp",
 		"build": "gulp build --build",
-		"ghPages": "git branch -D gh-pages && git checkout --orphan gh-pages && gulp build --build && git rm -f --cached $(git ls-files) && find dist/ | xargs git add && git commit -m \"Init gh-pages\" && git reset $(git commit-tree HEAD^{tree} -m \"Init gh-pages\") && git push --set-upstream origin gh-pages --force && git clean -fxd && git checkout main && git pull",
+		"ghPages": "git branch -D gh-pages || echo \"Delete local branch failed. It is possible that local branch exists\" && git checkout --orphan gh-pages && gulp build --build && git rm -f --cached $(git ls-files) && find dist/ | xargs git add && git commit -m \"Init gh-pages\" && git reset $(git commit-tree HEAD^{tree} -m \"Init gh-pages\") && git push --set-upstream origin gh-pages --force && git clean -fxd && git checkout main && git pull",
 		"zip": "gulp deployZIP --build",
 		"deploy": "gulp deployFTP --build",
 		"fonts": "gulp fonts",
