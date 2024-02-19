@@ -29,6 +29,7 @@
 .slider {
 	--clr-buttons: var(--clr-light);
 	--clr-interaction: #5f75f1;
+	--clr-interaction-light: #8e9efc;
 
 	position: relative;
 
@@ -146,7 +147,7 @@
 
 	// .slider__page
 
-	&__page {
+	&__dot {
 		height: rem(20);
 		width: rem(35);
 		border-radius: rem(10);
@@ -161,14 +162,19 @@
 			background-color: var(--clr-interaction);
 		}
 
-		&:focus {
+		&:focus-visible {
 			outline-color: var(--clr-interaction);
+			background-color: var(--clr-interaction-light);
 		}
 
 		@media (any-hover: hover) {
 			&:hover {
-				outline-color: var(--clr-interaction);
+				background-color: var(--clr-interaction-light);
 			}
+		}
+
+		&:active {
+			background-color: var(--clr-interaction);
 		}
 	}
 
@@ -207,7 +213,7 @@
 			transition: all 0.3s;
 		}
 
-		&:focus {
+		&:focus-visible {
 			outline-color: var(--clr-interaction);
 
 			&>svg {
@@ -217,8 +223,12 @@
 
 		@media (any-hover: hover) {
 			&:hover>svg {
-				fill: var(--clr-interaction);
+				fill: var(--clr-interaction-light);
 			}
+		}
+
+		&:active>svg {
+			fill: var(--clr-interaction);
 		}
 	}
 }
