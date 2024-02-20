@@ -297,13 +297,15 @@ body.--modal-opened, body.--burger-menu-opened {
   outline-color: var(--clr-interaction);
   background-color: var(--clr-interaction-light);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .slider__dot:hover {
     background-color: var(--clr-interaction-light);
   }
 }
-.slider__dot:active {
-  background-color: var(--clr-interaction);
+@media (hover: none) {
+  .slider__dot:active {
+    background-color: var(--clr-interaction);
+  }
 }
 .slider__slide-button {
   position: absolute;
@@ -332,11 +334,13 @@ body.--modal-opened, body.--burger-menu-opened {
 .slider__slide-button:focus-visible > svg {
   fill: var(--clr-interaction);
 }
-@media (any-hover: hover) {
+@media (hover: hover) {
   .slider__slide-button:hover > svg {
     fill: var(--clr-interaction-light);
   }
 }
-.slider__slide-button:active > svg {
-  fill: var(--clr-interaction);
+@media (hover: none) {
+  .slider__slide-button:active > svg {
+    fill: var(--clr-interaction);
+  }
 }

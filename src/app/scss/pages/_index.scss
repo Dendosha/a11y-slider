@@ -145,7 +145,7 @@
 		}
 	}
 
-	// .slider__page
+	// .slider__dot
 
 	&__dot {
 		height: rem(20);
@@ -167,14 +167,16 @@
 			background-color: var(--clr-interaction-light);
 		}
 
-		@media (any-hover: hover) {
+		@media (hover: hover) {
 			&:hover {
 				background-color: var(--clr-interaction-light);
 			}
 		}
 
-		&:active {
-			background-color: var(--clr-interaction);
+		@media (hover: none) {
+			&:active {
+				background-color: var(--clr-interaction);
+			}
 		}
 	}
 
@@ -221,14 +223,16 @@
 			}
 		}
 
-		@media (any-hover: hover) {
+		@media (hover: hover) {
 			&:hover>svg {
 				fill: var(--clr-interaction-light);
 			}
 		}
 
-		&:active>svg {
-			fill: var(--clr-interaction);
+		@media (hover: none) {
+			&:active>svg {
+				fill: var(--clr-interaction);
+			}
 		}
 	}
 }

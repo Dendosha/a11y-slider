@@ -194,6 +194,7 @@ export class Navigation {
 }
 
 export class StandardEffect {
+	#previousTimeStamp = 0
 
 	constructor(slider, slides, options) {
 		this.slider = slider
@@ -219,18 +220,25 @@ export class StandardEffect {
 		this.pointerDownHandler = this.pointerDownHandler.bind(this)
 		this.pointerUpHandler = this.pointerUpHandler.bind(this)
 		this.pointerMoveHandler = this.pointerMoveHandler.bind(this)
+		this.resizeObserver = this.resizeObserver.bind(this)
 
 		this.slider.element.addEventListener('pointerdown', this.pointerDownHandler)
 		this.slider.element.addEventListener('pointerup', this.pointerUpHandler)
 		this.slider.element.addEventListener('pointermove', this.pointerMoveHandler)
+
+		new ResizeObserver(this.resizeObserver).observe(this.slider.element)
 	}
 
-	recalculateTranslateWidth() {
-		this.translateWidth = this.slider.currentSlide.offsetWidth + (parseFloat(getComputedStyle(this.slider.slideList).columnGap) || 0)
+	resizeObserver() {
+		this.translateWidth = this.slider.currentSlide.offsetWidth + this.slider.slidesGap
+
+		if (getComputedStyle(this.slider.slideList).transform.split(', ')[4] % this.translateWidth !== 0) {
+			this.slider.slideList.style.transform = `translateX(-${this.translateWidth * this.slider.currentSlideIndex}px)`
+		}
 	}
 
 	pointerDownHandler(e) {
-		if (e.target.closest('[data-slider="slideList"]')) {
+		if (e.target.closest('[data-slider="slideList"]') && e.isPrimary) {
 			this.slider.userPointer.isDown = true
 			this.slider.userPointer.target = e.target
 			this.grabSlideList.clientX = e.clientX
@@ -238,12 +246,11 @@ export class StandardEffect {
 
 			this.slider.slideList.style.transition = ''
 			this.slider.slideList.style.cursor = this.slider.options.cursor.grab || 'default'
-			this.recalculateTranslateWidth()
 		}
 	}
 
 	pointerUpHandler(e) {
-		if (this.slider.userPointer.isDown) {
+		if (this.slider.userPointer.isDown && e.isPrimary) {
 			this.slider.userPointer.isDown = false
 			this.slider.userPointer.target = null
 			this.grabSlideList.clientX = 0
@@ -276,7 +283,10 @@ export class StandardEffect {
 	}
 
 	pointerMoveHandler(e) {
-		if (!this.slider.userPointer.isDown) return
+		if (!this.slider.userPointer.isDown || !e.isPrimary) return
+
+		if (Date.now() - this.#previousTimeStamp < 1) return
+		this.#previousTimeStamp = Date.now()
 
 		this.grabSlideList.translated = -this.translateWidth * this.slider.currentSlideIndex
 		this.translateChange = e.clientX - this.grabSlideList.clientX
@@ -286,9 +296,6 @@ export class StandardEffect {
 	}
 
 	slideAnimation(slideIndex) {
-		this.recalculateTranslateWidth()
-
-		const newSlide = this.slider.slides[slideIndex]
-		newSlide.parentElement.style.transform = `translateX(-${this.translateWidth * slideIndex}px)`
+		this.slider.slideList.style.transform = `translateX(-${this.translateWidth * slideIndex}px)`
 	}
 }

@@ -3,6 +3,33 @@ import { slideTo } from "./components/functions.js"
 
 class Slider {
 
+	/**
+	 * Creates a slider.
+	 * 
+	 * @param {HTMLElement} element Slider element.
+	 * @param {Object} options Slider options.
+	 * @param {class[]} options.modules Array of slider modules.
+	 * @param {string} options.transition Slider transition property.
+	 * @param {string} options.slideStatusA11y Slider status message for screen readers.
+
+	 * @param {Object} options.cursor Cursor options for slider.
+	 * @param {string} options.cursor.pointerEnter Default cursor.
+	 * @param {string} options.cursor.grab Grab cursor.
+
+	 * @param {Object} options.skipSlider Skip slider button options.
+	 * @param {string} options.skipSlider.buttonPresense Skip slider button presense.
+	 * @param {Array} options.skipSlider.a11y A11y for skip slider button.
+
+	 * @param {Object} options.navigation Navigation buttons options.
+	 * @param {HTMLElement} options.navigation.prevButton Previous slide button html element.
+	 * @param {HTMLElement} options.navigation.nextButton Next slide button html element.
+	 * @param {Array} options.navigation.a11y A11y for navigation buttons.
+
+	 * @param {Object} options.pagination Pagination options.
+	 * @param {HTMLElement} options.pagination.element Pagination html element.
+	 * @param {Array} options.pagination.a11y A11y for pagination.
+	 */
+
 	constructor(element, options) {
 		this.element = element
 		this.options = options
@@ -25,6 +52,8 @@ class Slider {
 		this.slides = Array.from(this.slideList.children)
 		this.currentSlide = null
 		this.currentSlideIndex = null
+
+		this.slidesGap = parseFloat(getComputedStyle(this.slides[0]).marginRight) || parseFloat(getComputedStyle(this.slides[1]).marginLeft) || parseFloat(getComputedStyle(this.slideList).columnGap) || 0
 
 		this.#addAccessibility()
 

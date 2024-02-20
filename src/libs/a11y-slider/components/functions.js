@@ -1,3 +1,12 @@
+/**
+ * Switches the slide
+ * 
+ * @param {number} slideIndex Index of new slide
+ * @param {Slider} slider Slider instance
+ * @param {function} animation Slide switch animation function
+ * @param {boolean} needUpdate Necessity of update interactive elements
+ */
+
 export function slideTo(slideIndex, slider, animation = null, needUpdate = false) {
 	const statusTextTemplate = slider.options.slideStatusA11y?.split(', ') || ['Displaying slide', 'of']
 
