@@ -213,6 +213,8 @@ export class StandardEffect {
 			if (e.cancelable) {
 				e.preventDefault()
 				e.stopPropagation()
+
+				return false
 			}
 		}
 
