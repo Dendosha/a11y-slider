@@ -209,6 +209,8 @@ export class StandardEffect {
 		this.translateChange = 0
 		this.translateValue = 0
 
+		this.scrollLock = (e) => e.preventDefault()
+
 		this.grabSlideList = {
 			clientX: 0,
 			clientY: 0,
@@ -246,6 +248,10 @@ export class StandardEffect {
 
 			this.slider.slideList.style.transition = ''
 			this.slider.slideList.style.cursor = this.slider.options.cursor.grab || 'default'
+
+			document.addEventListener('scroll', this.scrollLock, { passive: false });
+			document.addEventListener('wheel', this.scrollLock, { passive: false });
+			document.addEventListener('touchmove', this.scrollLock, { passive: false });
 		}
 	}
 
@@ -279,6 +285,10 @@ export class StandardEffect {
 
 			this.slider.slideList.style.transition = this.slider.options.transition
 			this.slider.slideList.style.cursor = this.slider.options.cursor.pointerEnter || 'default'
+
+			document.removeEventListener('scroll', this.scrollLock, { passive: false })
+			document.removeEventListener('wheel', this.scrollLock, { passive: false })
+			document.removeEventListener('touchmove', this.scrollLock, { passive: false })
 		}
 	}
 
