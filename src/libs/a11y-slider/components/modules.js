@@ -1,4 +1,5 @@
 import { slideTo } from "./functions.js"
+import { disableScroll, enableScroll } from "../../scroll-lock/scrollLock.js"
 
 export class Pagination {
 
@@ -209,14 +210,14 @@ export class StandardEffect {
 		this.translateChange = 0
 		this.translateValue = 0
 
-		this.scrollLock = (e) => {
-			if (e.cancelable) {
-				e.preventDefault()
-				e.stopPropagation()
+		// this.scrollLock = (e) => {
+		// 	if (e.cancelable) {
+		// 		e.preventDefault()
+		// 		e.stopPropagation()
 
-				return false
-			}
-		}
+		// 		return false
+		// 	}
+		// }
 
 		this.grabSlideList = {
 			clientX: 0,
@@ -256,9 +257,7 @@ export class StandardEffect {
 			this.slider.slideList.style.transition = ''
 			this.slider.slideList.style.cursor = this.slider.options.cursor.grab || 'default'
 
-			document.addEventListener('scroll', this.scrollLock, { passive: false });
-			document.addEventListener('wheel', this.scrollLock, { passive: false });
-			document.addEventListener('touchmove', this.scrollLock, { passive: false });
+			disableScroll()
 		}
 	}
 
@@ -293,9 +292,7 @@ export class StandardEffect {
 			this.slider.slideList.style.transition = this.slider.options.transition
 			this.slider.slideList.style.cursor = this.slider.options.cursor.pointerEnter || 'default'
 
-			document.removeEventListener('scroll', this.scrollLock, { passive: false })
-			document.removeEventListener('wheel', this.scrollLock, { passive: false })
-			document.removeEventListener('touchmove', this.scrollLock, { passive: false })
+			enableScroll()
 		}
 	}
 
