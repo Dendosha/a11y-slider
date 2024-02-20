@@ -210,15 +210,6 @@ export class StandardEffect {
 		this.translateChange = 0
 		this.translateValue = 0
 
-		// this.scrollLock = (e) => {
-		// 	if (e.cancelable) {
-		// 		e.preventDefault()
-		// 		e.stopPropagation()
-
-		// 		return false
-		// 	}
-		// }
-
 		this.grabSlideList = {
 			clientX: 0,
 			clientY: 0,
