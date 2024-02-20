@@ -209,7 +209,12 @@ export class StandardEffect {
 		this.translateChange = 0
 		this.translateValue = 0
 
-		this.scrollLock = (e) => e.preventDefault()
+		this.scrollLock = (e) => {
+			if (e.cancelable) {
+				e.preventDefault()
+				e.stopPropagation()
+			}
+		}
 
 		this.grabSlideList = {
 			clientX: 0,
