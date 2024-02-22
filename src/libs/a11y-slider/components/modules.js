@@ -225,7 +225,7 @@ export class StandardEffect {
 
 		this.slider.element.addEventListener('pointerdown', this.pointerDownHandler)
 		this.slider.element.addEventListener('pointerup', this.pointerUpHandler)
-		this.slider.element.addEventListener('pointermove', this.pointerMoveHandler)
+		this.slider.element.addEventListener('pointermove', this.pointerMoveHandler, { passive: false })
 
 		new ResizeObserver(this.resizeObserver).observe(this.slider.element)
 	}
