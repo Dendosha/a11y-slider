@@ -289,6 +289,8 @@ export class StandardEffect {
 
 	pointerMoveHandler(e) {
 		if (!this.slider.userPointer.isDown || !e.isPrimary) return
+		e.preventDefault()
+		e.stopPropagation()
 
 		if (Date.now() - this.#previousTimeStamp < 1) return
 		this.#previousTimeStamp = Date.now()
